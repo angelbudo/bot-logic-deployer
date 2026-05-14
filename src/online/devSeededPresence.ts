@@ -17,8 +17,8 @@ export const DEV_MOCK_PRESENCE = true;
  */
 export const DEV_MOCK_ONLINE_PLAYERS: OnlinePlayer[] = [
   // Jugant en mesa
-  { deviceId: "mock-device-1", name: "Maria Trucàs",  userId: "9e962701-3996-4da1-951e-d90565959e40", roomCode: "K7M2X9", salaSlug: "la-falta" },
-  { deviceId: "mock-device-2", name: "Joan Manilla",  userId: "5bf5a31e-c4dc-4312-a81b-cfe8d8c5a534", roomCode: "K7M2X9", salaSlug: "la-falta" },
+  { deviceId: "mock-device-1", name: "Maria Trucàs",  userId: "9e962701-3996-4da1-951e-d90565959e40", roomCode: "T3R8P1", salaSlug: "la-falta" },
+  { deviceId: "mock-device-2", name: "Joan Manilla",  userId: "5bf5a31e-c4dc-4312-a81b-cfe8d8c5a534", roomCode: "T3R8P1", salaSlug: "la-falta" },
   { deviceId: "mock-device-3", name: "Laia Envit",    userId: "9e1015d4-1521-4ecb-8f62-a4041177dbef", roomCode: "T3R8P1", salaSlug: "la-falta" },
   { deviceId: "mock-device-4", name: "Pau Espases",   userId: "6ef4f835-c72c-4766-a85b-d4a3e2c3b865", roomCode: "T3R8P1", salaSlug: "la-falta" },
   // Lliures (sense mesa)
