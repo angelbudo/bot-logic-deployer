@@ -58,8 +58,8 @@ function PlayersTopPanel({
             const isMe = p.deviceId === myDeviceId;
             const stats = getStats({ deviceId: p.deviceId, userId: p.userId ?? null });
             return (
-              <div key={p.deviceId} className="leading-snug flex items-center gap-1">
-                <div className="flex-1 min-w-0 flex items-center gap-1">
+              <div key={p.deviceId} className="leading-snug flex items-center gap-1.5">
+                <div className="min-w-0 flex items-center gap-1.5 flex-1">
                   {isMe ? (
                     <span className="font-semibold text-background truncate">
                       {p.name} {t("seat.me_suffix")}
@@ -79,13 +79,13 @@ function PlayersTopPanel({
                       }
                     />
                   )}
-                  {p.roomCode && (
-                    <span className="text-[10px] tracking-wider text-background/60 ml-1 shrink-0">
-                      {t("players.at_room", { code: p.roomCode })}
-                    </span>
-                  )}
+                  <PlayerMiniStatsRow stats={stats} className="shrink-0" />
                 </div>
-                <PlayerMiniStatsRow stats={stats} className="shrink-0" />
+                {p.roomCode && (
+                  <span className="text-[10px] tracking-wider text-background/60 shrink-0 ml-auto">
+                    {t("players.at_room", { code: p.roomCode })}
+                  </span>
+                )}
               </div>
             );
           })
