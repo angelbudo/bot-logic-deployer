@@ -1,4 +1,2 @@
 project_id = "jbeacdyycmjrwsqwmhsj"
 
-[functions.apply-migrations]
-verify_jwt = false
