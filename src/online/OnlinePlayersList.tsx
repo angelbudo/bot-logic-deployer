@@ -3,6 +3,8 @@ import { Mail, User } from "lucide-react";
 import type { OnlinePlayer } from "./useLobbyPresence";
 import { useT } from "@/i18n/useT";
 import { PlayerProfileDialog } from "./PlayerProfileDialog";
+import { usePlayerMiniStats } from "./usePlayerMiniStats";
+import { PlayerMiniStatsRow } from "./PlayerMiniStats";
 
 interface Props {
   players: OnlinePlayer[];
