@@ -32,6 +32,7 @@ export function OnlinePlayersList({
   const others = players.filter(
     (p) => p.deviceId !== myDeviceId && !excludeDeviceIds.includes(p.deviceId),
   );
+  const { getStats } = usePlayerMiniStats(others.map((p) => ({ deviceId: p.deviceId, userId: p.userId ?? null })));
 
   const sectionClass = bare
     ? "p-1 flex flex-col gap-2"
@@ -50,36 +51,36 @@ export function OnlinePlayersList({
         <ul className="flex flex-col gap-1.5 max-h-48 overflow-y-auto">
           {others.map((p) => {
             const busy = !!p.roomCode;
+            const stats = getStats({ deviceId: p.deviceId, userId: p.userId ?? null });
             return (
               <li
                 key={p.deviceId}
-                className="flex items-center justify-between gap-2 px-2 py-1.5 rounded-lg bg-background/30 border border-primary/20"
+                className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg bg-background/30 border border-primary/20 min-w-0"
               >
-                <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <User className="w-3.5 h-3.5 text-primary/70 shrink-0" />
-                  <PlayerProfileDialog
-                    userId={p.userId ?? undefined}
-                    deviceId={p.userId ? undefined : p.deviceId}
-                    fallbackName={p.name}
-                    trigger={
-                      <button
-                        type="button"
-                        className="text-xs text-foreground truncate hover:underline focus:outline-none focus:underline text-left"
-                      >
-                        {p.name}
-                      </button>
-                    }
-                  />
-                </div>
+                <User className="w-3.5 h-3.5 text-primary/70 shrink-0" />
+                <PlayerProfileDialog
+                  userId={p.userId ?? undefined}
+                  deviceId={p.userId ? undefined : p.deviceId}
+                  fallbackName={p.name}
+                  trigger={
+                    <button
+                      type="button"
+                      className="text-xs text-foreground truncate min-w-0 hover:underline focus:outline-none focus:underline text-left"
+                    >
+                      {p.name}
+                    </button>
+                  }
+                />
+                <PlayerMiniStatsRow stats={stats} className="shrink-0" />
                 {busy ? (
-                  <span className="text-[10px] tracking-wider text-muted-foreground shrink-0 ml-auto">
+                  <span className="text-[10px] text-muted-foreground shrink-0 ml-auto pl-1">
                     {t("players.at_room", { code: p.roomCode })}
                   </span>
                 ) : onInvite ? (
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-7 px-2 text-[11px] border-primary/40 text-primary hover:bg-primary/10"
+                    className="h-7 px-2 text-[11px] border-primary/40 text-primary hover:bg-primary/10 shrink-0 ml-auto"
                     onClick={() => onInvite(p)}
                   >
                     <Mail className="w-3 h-3 mr-1" /> Invitar
