@@ -489,14 +489,14 @@ function InviteList({
                           />
                           <PlayerMiniStatsRow stats={stats} className="shrink-0" />
                           {busy ? (
-                            <span className="text-[10px] text-background/60 shrink-0 ml-auto pl-1">
+                            <span className="text-[10px] text-background/60 shrink-0 ml-auto w-20 text-center leading-none">
                               {t("players.at_room", { code: p.roomCode })}
                             </span>
                           ) : (
                             <button
                               type="button"
                               onClick={() => { void sendInvite(p.deviceId); }}
-                              className="ml-auto h-5 px-1.5 text-[10px] inline-flex items-center gap-1 rounded border border-primary/40 text-primary bg-background hover:bg-primary/10 shrink-0 leading-none"
+                              className="ml-auto h-5 w-20 px-1.5 text-[10px] inline-flex items-center justify-center gap-1 rounded border border-primary/40 text-primary bg-background hover:bg-primary/10 shrink-0 leading-none"
                             >
                               <Mail className="w-3 h-3" /> {t("players.invite")}
                             </button>
