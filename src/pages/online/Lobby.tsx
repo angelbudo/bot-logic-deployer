@@ -64,6 +64,7 @@ function SalaPlayersPanel({
   headerExtra?: React.ReactNode;
   onInvite?: (player: OnlinePlayer) => void;
 }) {
+  const t = useT();
   const me = players.find((p) => p.deviceId === myDeviceId);
   const others = players.filter((p) => p.deviceId !== myDeviceId);
   const list = me ? [me, ...others] : others;
