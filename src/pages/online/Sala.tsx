@@ -412,7 +412,7 @@ function Sala() {
       )}
 
       <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
-        <DialogContent className="w-[92vw] sm:max-w-md h-[60vh] flex flex-col p-0 rounded-lg border border-primary/30 bg-gray-200 overflow-hidden [&>button]:hidden">
+        <DialogContent className="w-[90vw] sm:max-w-md h-[60vh] flex flex-col p-0 rounded-lg border border-primary/30 bg-gray-200 text-background overflow-hidden [&>button]:hidden">
           {(() => {
             const invitable = onlinePlayers.filter(
               (p) => p.deviceId !== deviceId && !seatedDeviceIds.includes(p.deviceId),
