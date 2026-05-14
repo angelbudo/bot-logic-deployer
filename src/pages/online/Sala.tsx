@@ -449,9 +449,10 @@ function InviteList({
   return (
     <>
                 <div className="pl-2 pr-1 py-0 border-b border-primary/20 flex items-center gap-2 bg-background rounded-t-lg h-7 overflow-hidden">
-                  <DialogTitle className="text-xs font-semibold text-primary flex-1 min-w-0 truncate m-0">
-                    {t("players.connected")}{" "}
-                    <span className="text-[10px] font-normal">({invitable.length})</span>
+                  <DialogTitle asChild>
+                    <span className="text-xs font-semibold text-primary flex-1 min-w-0 truncate">
+                      {t("players.connected")} <span className="text-[10px] font-normal">({invitable.length})</span>
+                    </span>
                   </DialogTitle>
                   <button
                     type="button"
