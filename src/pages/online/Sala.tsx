@@ -412,7 +412,7 @@ function Sala() {
       )}
 
       <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
-        <DialogContent className="w-[92vw] sm:max-w-md h-[60vh] flex flex-col p-0 rounded-lg border border-primary/30 bg-gray-200 overflow-hidden [&>button]:hidden">
+        <DialogContent className="w-[90vw] sm:max-w-md h-[60vh] flex flex-col p-0 rounded-lg border border-primary/30 bg-gray-200 text-background overflow-hidden [&>button]:hidden">
           {(() => {
             const invitable = onlinePlayers.filter(
               (p) => p.deviceId !== deviceId && !seatedDeviceIds.includes(p.deviceId),
@@ -462,7 +462,7 @@ function InviteList({
                     <X className="h-7 w-7" />
                   </button>
                 </div>
-                <div className="px-2 py-1.5 flex-1 min-h-0 overflow-y-auto chat-scroll text-xs space-y-0.5 text-background">
+                <div className="px-2 py-1.5 flex-1 min-h-0 overflow-y-auto chat-scroll text-xs space-y-0.5">
                   {invitable.length === 0 ? (
                     <p className="text-background/60 italic text-center py-2">
                       {t("players.no_one_connected")}
@@ -472,36 +472,30 @@ function InviteList({
                       const busy = !!p.roomCode;
                       const stats = getStats({ deviceId: p.deviceId, userId: p.userId ?? null });
                       return (
-                        <div
-                          key={p.deviceId}
-                          className="leading-snug flex items-center gap-1"
-                        >
-                          <div className="flex-1 min-w-0 flex items-center gap-1">
-                            <PlayerProfileDialog
-                              userId={p.userId ?? undefined}
-                              deviceId={p.userId ? undefined : p.deviceId}
-                              fallbackName={p.name}
-                              trigger={
-                                <button
-                                  type="button"
-                                  className="font-semibold text-background hover:underline focus:outline-none focus:underline text-left truncate"
-                                >
-                                  {p.name}
-                                </button>
-                              }
-                            />
-                            {busy && (
-                              <span className="text-[9px] tracking-wider text-background/60 shrink-0">
-                                {t("players.at_room", { code: p.roomCode })}
-                              </span>
-                            )}
-                          </div>
+                        <div key={p.deviceId} className="leading-snug flex items-center gap-1.5 min-w-0">
+                          <PlayerProfileDialog
+                            userId={p.userId ?? undefined}
+                            deviceId={p.userId ? undefined : p.deviceId}
+                            fallbackName={p.name}
+                            trigger={
+                              <button
+                                type="button"
+                                className="font-semibold text-background hover:underline focus:outline-none focus:underline text-left truncate min-w-0"
+                              >
+                                {p.name}
+                              </button>
+                            }
+                          />
                           <PlayerMiniStatsRow stats={stats} className="shrink-0" />
-                          {!busy && (
+                          {busy ? (
+                            <span className="text-[10px] text-background/60 shrink-0 ml-auto pl-1">
+                              {t("players.at_room", { code: p.roomCode })}
+                            </span>
+                          ) : (
                             <button
                               type="button"
                               onClick={() => { void sendInvite(p.deviceId); }}
-                              className="h-5 px-1.5 text-[10px] inline-flex items-center gap-1 rounded border border-primary/40 text-primary bg-background hover:bg-primary/10 shrink-0 leading-none"
+                              className="ml-auto h-5 px-1.5 text-[10px] inline-flex items-center gap-1 rounded border border-primary/40 text-primary bg-background hover:bg-primary/10 shrink-0 leading-none"
                             >
                               <Mail className="w-3 h-3" /> {t("players.invite")}
                             </button>
