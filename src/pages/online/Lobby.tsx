@@ -15,6 +15,8 @@ import { useLobbyPresence } from "@/online/useLobbyPresence";
 import { OnlinePlayersList } from "@/online/OnlinePlayersList";
 import type { OnlinePlayer } from "@/online/useLobbyPresence";
 import { PlayerProfileDialog } from "@/online/PlayerProfileDialog";
+import { PlayerMiniStatsRow } from "@/online/PlayerMiniStats";
+import { usePlayerMiniStats } from "@/online/usePlayerMiniStats";
 import { useSendInvite } from "@/online/useInvites";
 import { useAdminPassword } from "@/hooks/useAdminPassword";
 import { toast } from "sonner";
@@ -65,6 +67,9 @@ function SalaPlayersPanel({
   const me = players.find((p) => p.deviceId === myDeviceId);
   const others = players.filter((p) => p.deviceId !== myDeviceId);
   const list = me ? [me, ...others] : others;
+  const { getStats } = usePlayerMiniStats(
+    list.map((p) => ({ deviceId: p.deviceId, userId: p.userId ?? null })),
+  );
   return (
     <section
       className="rounded-t-lg border border-b-0 border-primary/30 bg-gray-200 text-background shadow-xl flex flex-col flex-[0_0_auto] h-[calc(40%+20px)]"
@@ -83,30 +88,34 @@ function SalaPlayersPanel({
           list.map((p) => {
             const isMe = p.deviceId === myDeviceId;
             const busy = !!p.roomCode;
+            const stats = getStats({ deviceId: p.deviceId, userId: p.userId ?? null });
             return (
-              <div key={p.deviceId} className="leading-snug flex items-center gap-1">
-                {isMe ? (
-                  <span className="font-semibold text-background">
-                    {p.name} (tu)
-                  </span>
-                ) : (
-                  <PlayerProfileDialog
-                    userId={p.userId ?? undefined}
-                    deviceId={p.userId ? undefined : p.deviceId}
-                    fallbackName={p.name}
-                    trigger={
-                      <button
-                        type="button"
-                        className="font-semibold text-background hover:underline focus:outline-none focus:underline text-left"
-                      >
-                        {p.name}
-                      </button>
-                    }
-                  />
-                )}
-                {p.roomCode && (
-                  <span className="text-[10px] uppercase tracking-wider text-background/60 ml-1">
-                    a {p.roomCode}
+              <div key={p.deviceId} className="leading-snug flex items-center gap-1.5 min-w-0">
+                <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                  {isMe ? (
+                    <span className="font-semibold text-background truncate min-w-0">
+                      {p.name} (tu)
+                    </span>
+                  ) : (
+                    <PlayerProfileDialog
+                      userId={p.userId ?? undefined}
+                      deviceId={p.userId ? undefined : p.deviceId}
+                      fallbackName={p.name}
+                      trigger={
+                        <button
+                          type="button"
+                          className="font-semibold text-background hover:underline focus:outline-none focus:underline text-left truncate min-w-0"
+                        >
+                          {p.name}
+                        </button>
+                      }
+                    />
+                  )}
+                  <PlayerMiniStatsRow stats={stats} className="shrink-0" />
+                </div>
+                {busy && (
+                  <span className="text-[10px] text-background/60 shrink-0 ml-auto pl-1">
+                    {t("players.at_room", { code: p.roomCode })}
                   </span>
                 )}
                 {!isMe && !busy && onInvite && (
