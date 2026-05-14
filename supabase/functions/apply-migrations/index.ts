@@ -1,13 +1,8 @@
-// One-shot migration runner. Reads embedded SQL and executes via admin DB.
+// One-shot migration runner. TEMPORARY - delete after migrations applied.
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { Client } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 
 Deno.serve(async (req) => {
-  const auth = req.headers.get("x-admin-key");
-  if (auth !== Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
   const dbUrl = Deno.env.get("SUPABASE_DB_URL");
   if (!dbUrl) return new Response("No DB URL", { status: 500 });
 
@@ -23,7 +18,7 @@ Deno.serve(async (req) => {
       headers: { "content-type": "application/json" },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: String(err) }), {
+    return new Response(JSON.stringify({ error: String(err), message: (err as Error).message }), {
       status: 500,
       headers: { "content-type": "application/json" },
     });
