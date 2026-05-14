@@ -68,13 +68,12 @@ export function OnlinePlayersList({
                       </button>
                     }
                   />
-                  {busy && (
-                    <span className="text-[9px] tracking-wider text-muted-foreground shrink-0">
-                      {t("players.at_room", { code: p.roomCode })}
-                    </span>
-                  )}
                 </div>
-                {onInvite && !busy && (
+                {busy ? (
+                  <span className="text-[10px] tracking-wider text-muted-foreground shrink-0 ml-auto">
+                    {t("players.at_room", { code: p.roomCode })}
+                  </span>
+                ) : onInvite ? (
                   <Button
                     size="sm"
                     variant="outline"
@@ -83,7 +82,7 @@ export function OnlinePlayersList({
                   >
                     <Mail className="w-3 h-3 mr-1" /> Invitar
                   </Button>
-                )}
+                ) : null}
               </li>
             );
           })}
