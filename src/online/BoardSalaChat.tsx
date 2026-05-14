@@ -58,31 +58,29 @@ function PlayersTopPanel({
             const isMe = p.deviceId === myDeviceId;
             const stats = getStats({ deviceId: p.deviceId, userId: p.userId ?? null });
             return (
-              <div key={p.deviceId} className="leading-snug flex items-center gap-1.5">
-                <div className="min-w-0 flex items-center gap-1.5 flex-1">
-                  {isMe ? (
-                    <span className="font-semibold text-background truncate">
-                      {p.name} {t("seat.me_suffix")}
-                    </span>
-                  ) : (
-                    <PlayerProfileDialog
-                      userId={p.userId ?? undefined}
-                      deviceId={p.userId ? undefined : p.deviceId}
-                      fallbackName={p.name}
-                      trigger={
-                        <button
-                          type="button"
-                          className="font-semibold text-background hover:underline focus:outline-none focus:underline text-left truncate"
-                        >
-                          {p.name}
-                        </button>
-                      }
-                    />
-                  )}
-                  <PlayerMiniStatsRow stats={stats} className="shrink-0" />
-                </div>
+              <div key={p.deviceId} className="leading-snug flex items-center gap-1.5 min-w-0">
+                {isMe ? (
+                  <span className="font-semibold text-background truncate min-w-0">
+                    {p.name} {t("seat.me_suffix")}
+                  </span>
+                ) : (
+                  <PlayerProfileDialog
+                    userId={p.userId ?? undefined}
+                    deviceId={p.userId ? undefined : p.deviceId}
+                    fallbackName={p.name}
+                    trigger={
+                      <button
+                        type="button"
+                        className="font-semibold text-background hover:underline focus:outline-none focus:underline text-left truncate min-w-0"
+                      >
+                        {p.name}
+                      </button>
+                    }
+                  />
+                )}
+                <PlayerMiniStatsRow stats={stats} className="shrink-0" />
                 {p.roomCode && (
-                  <span className="text-[10px] tracking-wider text-background/60 shrink-0 ml-auto">
+                  <span className="text-[10px] text-background/60 shrink-0 ml-auto pl-1">
                     {t("players.at_room", { code: p.roomCode })}
                   </span>
                 )}
