@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowLeft, Trophy, Star, Flame } from "lucide-react";
 import { fetchLeaderboard, type LeaderboardEntry, type LeaderboardKind } from "@/lib/leaderboards";
+import { PlayerProfileDialog } from "@/online/PlayerProfileDialog";
 
 function Loading() {
   return <main className="min-h-screen flex items-center justify-center"><Loader2 className="w-6 h-6 animate-spin text-primary" /></main>;
@@ -33,18 +34,25 @@ function Board({ kind }: { kind: LeaderboardKind }) {
       ? e.profile.username
       : "Jugador anònim";
         return (
-          <div key={e.profile.user_id} className="flex items-center justify-between rounded-md border p-2">
-            <div className="flex items-center gap-3 min-w-0">
-              <span className="w-7 text-center font-bold text-muted-foreground">{e.rank}</span>
-              <div className="min-w-0">
-                <div className={`font-medium truncate ${e.profile.username ? "" : "italic text-muted-foreground"}`}>{label}</div>
-                <div className="text-xs text-muted-foreground">
-                  Niv. {e.stats.level} · {e.stats.wins}V/{e.stats.losses}D · ratxa {e.stats.max_streak}
+          <PlayerProfileDialog
+            key={e.profile.user_id}
+            userId={e.profile.user_id}
+            fallbackName={label}
+            trigger={
+              <button type="button" className="w-full flex items-center justify-between rounded-md border p-2 text-left hover:bg-background/60 transition">
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="w-7 text-center font-bold text-muted-foreground">{e.rank}</span>
+                  <div className="min-w-0">
+                    <div className={`font-medium truncate ${e.profile.username ? "" : "italic text-muted-foreground"}`}>{label}</div>
+                    <div className="text-xs text-muted-foreground">
+                      Niv. {e.stats.level} · {e.stats.wins}V/{e.stats.losses}D · ratxa {e.stats.max_streak}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="text-sm font-semibold tabular-nums">{valueOf(e)}</div>
-          </div>
+                <div className="text-sm font-semibold tabular-nums">{valueOf(e)}</div>
+              </button>
+            }
+          />
         );
       })}
     </div>
