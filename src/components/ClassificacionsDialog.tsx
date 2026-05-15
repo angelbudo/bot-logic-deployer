@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { Link } from "@/lib/router-shim";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Trophy, Star, Flame, WalletCards } from "lucide-react";
@@ -29,7 +30,7 @@ function Board({ kind }: { kind: LeaderboardKind }) {
       {entries.map((e) => {
         const label = e.profile.username ?? "Jugador anònim";
         return (
-          <div key={e.profile.user_id} className="flex items-center justify-between rounded-md border border-primary/25 p-2 text-neutral-900 bg-stone-200">
+          <Link key={e.profile.user_id} to={`/perfil/${e.profile.user_id}`} className="flex items-center justify-between rounded-md border border-primary/25 p-2 text-neutral-900 bg-stone-200 hover:bg-stone-300 transition">
             <div className="flex items-center gap-3 min-w-0">
               <span className="w-7 text-center font-bold text-neutral-900">{e.rank}</span>
               <div className="min-w-0">
@@ -40,7 +41,7 @@ function Board({ kind }: { kind: LeaderboardKind }) {
               </div>
             </div>
             <div className="text-sm font-semibold tabular-nums">{valueOf(e)}</div>
-          </div>
+          </Link>
         );
       })}
     </div>
