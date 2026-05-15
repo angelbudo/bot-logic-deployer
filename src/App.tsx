@@ -27,6 +27,7 @@ import Moderacio from "./pages/admin/Moderacio";
 import Regles from "./pages/Regles";
 import Auth from "./pages/Auth";
 import Perfil from "./pages/Perfil";
+import PerfilPublic from "./pages/PerfilPublic";
 import Classificacions from "./pages/Classificacions";
 
 const queryClient = new QueryClient();
@@ -59,6 +60,7 @@ const App = () => (
             <Route path="/regles" element={<Regles />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/perfil" element={<Perfil />} />
+            <Route path="/perfil/:userId" element={<PerfilPublic />} />
             <Route path="/classificacions" element={<Classificacions />} />
             <Route path="/admin/moderacio" element={<Moderacio />} />
             <Route path="*" element={<NotFound />} />

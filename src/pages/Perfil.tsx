@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "@/lib/router-shim";
+import { Link, useNavigate } from "@/lib/router-shim";
 import { ClientOnly } from "@/components/ClientOnly";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,6 @@ import { ShareAppButton } from "@/components/ShareAppButton";
 import { AvatarPicker } from "@/components/AvatarPicker";
 import { UsernameField } from "@/components/UsernameField";
 import { ClassificacionsDialog } from "@/components/ClassificacionsDialog";
-import { PlayerProfileDialog } from "@/online/PlayerProfileDialog";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 
 import { useAuth } from "@/hooks/useAuth";
@@ -202,21 +201,15 @@ function PerfilInner() {
                   )}
                   {friends.accepted.map((f) => (
                     <div key={f.friendship.id} className="flex items-center justify-between rounded-md border border-primary/25 bg-background/40 p-2">
-                      <PlayerProfileDialog
-                        userId={f.other.user_id}
-                        fallbackName={f.other.username ?? "Jugador anònim"}
-                        trigger={
-                          <button type="button" className="flex items-center gap-3 min-w-0 flex-1 text-left hover:opacity-80 transition">
-                            <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${f.online ? "bg-gold" : "bg-muted-foreground/40"}`} title={f.online ? "Connectat" : "Desconnectat"} />
-                            <div className="min-w-0">
-                              <div className="font-medium truncate text-foreground">{f.other.username ?? "Jugador anònim"}</div>
-                              <div className="text-xs text-muted-foreground">
-                                Niv. {f.stats?.level ?? 1} · {f.stats?.wins ?? 0}V · ratxa {f.stats?.max_streak ?? 0}
-                              </div>
-                            </div>
-                          </button>
-                        }
-                      />
+                      <Link to={`/perfil/${f.other.user_id}`} className="flex items-center gap-3 min-w-0 flex-1 text-left hover:opacity-80 transition">
+                        <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${f.online ? "bg-gold" : "bg-muted-foreground/40"}`} title={f.online ? "Connectat" : "Desconnectat"} />
+                        <div className="min-w-0">
+                          <div className="font-medium truncate text-foreground">{f.other.username ?? "Jugador anònim"}</div>
+                          <div className="text-xs text-muted-foreground">
+                            Niv. {f.stats?.level ?? 1} · {f.stats?.wins ?? 0}V · ratxa {f.stats?.max_streak ?? 0}
+                          </div>
+                        </div>
+                      </Link>
                       <Button size="sm" variant="ghost" onClick={async () => {
                         try { await removeFriend(f.other.user_id); friends.reload(); toast.success("Amic eliminat"); }
                         catch (e) { toast.error((e as Error).message); }
